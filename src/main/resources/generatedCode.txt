@@ -1,0 +1,103 @@
+       ; BEGIN Main Block
+push $fp ; Push old $fp
+subi $sp $sp 3
+push $sp
+mv $fp $sp
+li $t1 0
+push $t1 ; Push $ra as PlaceHolder
+       ; BEGIN DecVar 'a' 
+li $a0 5 ; Load 5 in $a0
+mv $al $fp
+sw $a0 1($al) ; Store $a0 in $al + offset
+       ; END DecVar 'a' 
+       ; BEGIN DecVar 'b' 
+li $a0 4 ; Load 4 in $a0
+mv $al $fp
+sw $a0 2($al) ; Store $a0 in $al + offset
+       ; END DecVar 'b' 
+       ; BEGIN DecVar 'c' 
+li $a0 3 ; Load 3 in $a0
+mv $al $fp
+sw $a0 3($al) ; Store $a0 in $al + offset
+       ; END DecVar 'c' 
+       ; BEGIN Call of f
+push $fp ; Push old $fp
+       ; BEGIN Var 
+mv $al $fp
+addi $a0 $al 1
+       ; END Var 
+push $a0 ; Push of mainPackage.SimpLanPlus.ast.nodes.VarNode@2db7a79b
+li $a0 1 ; Load 1 in $a0
+push $a0 ; Push of mainPackage.SimpLanPlus.ast.nodes.expNodes.NumExpNode@6950e31
+mv $al $fp
+push $al
+jal f ; Jump to function f
+       ; END Call of f
+       ; BEGIN Call of f
+push $fp ; Push old $fp
+       ; BEGIN Var 
+mv $al $fp
+addi $a0 $al 2
+       ; END Var 
+push $a0 ; Push of mainPackage.SimpLanPlus.ast.nodes.VarNode@b7dd107
+li $a0 2 ; Load 2 in $a0
+push $a0 ; Push of mainPackage.SimpLanPlus.ast.nodes.expNodes.NumExpNode@42eca56e
+mv $al $fp
+push $al
+jal f ; Jump to function f
+       ; END Call of f
+       ; BEGIN Call of f
+push $fp ; Push old $fp
+       ; BEGIN Var 
+mv $al $fp
+addi $a0 $al 3
+       ; END Var 
+push $a0 ; Push of mainPackage.SimpLanPlus.ast.nodes.VarNode@52f759d7
+li $a0 3 ; Load 3 in $a0
+push $a0 ; Push of mainPackage.SimpLanPlus.ast.nodes.expNodes.NumExpNode@7cbd213e
+mv $al $fp
+push $al
+jal f ; Jump to function f
+       ; END Call of f
+endBlock0:
+halt
+       ; END Main Block
+       ; BEGIN DecFun 'f'
+f:
+mv $fp $sp
+push $ra ; Save return address
+       ; BEGIN Block
+push $fp ; Push old $fp
+subi $sp $sp 0
+push $fp
+mv $fp $sp
+li $t1 0
+push $t1 ; Push $ra as PlaceHolder
+       ; BEGIN Assignment of 'x'
+       ; BEGIN Var 
+mv $al $fp
+lw $al 0($al)
+lw $a0 1($al) ; Loads in $a0 the value in n
+       ; END Var 
+push $a0 ; Push exp
+mv $al $fp
+lw $al 0($al)
+lw $a0 2($al)
+lw $t1 0($sp) ; Load exp from top of the stack
+pop
+sw $t1 0($a0) ; Store at $a0 the addres of reference var x stored in $t1
+       ; END Assignment of 'x'
+endBlock3:
+addi $sp $sp 2 ; Pop var declarations, $al and $ra
+lw $fp 0($sp) ; Restore old $fp
+pop ; Pop old $fp
+       ; END Block
+b endFun2
+endFun2:
+lw $ra 0($sp) ; Get return address from top of the stack
+addi $sp $sp 4 ; Pop all arguments, $al and $ra
+lw $fp 0($sp)
+pop ; Pop old $fp
+jr $ra
+       ; END DecFun 'f'
+endFunctionDefs1:

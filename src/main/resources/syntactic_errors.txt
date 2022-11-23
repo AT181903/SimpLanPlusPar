@@ -1,0 +1,2 @@
+Line: 167, Char Position: 4: extraneous input 'int' expecting {'{', '}', 'print', 'return', 'if', ID}
+

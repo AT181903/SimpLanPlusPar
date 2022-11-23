@@ -1,0 +1,3 @@
+Variable a used but not initialized
+Variable b used but not initialized
+Variable c used but not initialized
